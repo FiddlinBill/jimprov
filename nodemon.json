@@ -1,0 +1,17 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    "app/client/",
+    "public/",
+    "package.json"
+  ],
+  "ignoreRoot": [
+    ".git/",
+    "node_modules/*/node_modules/"
+  ],
+  "watch": [
+    "app/server/"
+  ],
+  "delay": 2000,
+  "ext": "js json html md"
+}

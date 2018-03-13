@@ -2,9 +2,16 @@
   "name": "jimprov",
   "version": "1.0.0",
   "description": "A group improv facilitation tool",
-  "main": "index.js",
+  "main": "app/server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app/server/index.js 2>&1",
+    "lab": "NODE_ENV=test node node_modules/.bin/lab -L --lint-warnings-threshold 99999",
+    "test": "npm run lab -- test/server/**",
+    "stylelint": "stylelint 'app/client/**/*.scss'; exit 0",
+    "coverage": "npm run lab -- -c",
+    "coverage:html": "npm run coverage -- -r html -o coverage.html",
+    "gulp": "gulp",
+    "postinstall": "gulp clean; gulp build;"
   },
   "repository": {
     "type": "git",
@@ -20,5 +27,13 @@
   "bugs": {
     "url": "https://github.com/FiddlinBill/jimprov/issues"
   },
-  "homepage": "https://github.com/FiddlinBill/jimprov#readme"
+  "homepage": "https://github.com/FiddlinBill/jimprov#readme",
+  "dependencies": {
+    "hapi": "^17.2.2",
+    "mongoose": "^5.0.9",
+    "nes": "^7.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.1"
+  }
 }

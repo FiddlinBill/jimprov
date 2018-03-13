@@ -1,0 +1,28 @@
+# Sets up a docker development environment.
+version: '3.2'
+volumes:
+  mongodb:
+services:
+  www:
+    image: jimprov/www:latest
+    build: .
+    volumes:
+      - ./:/app/src/www
+    links:
+      - mongodb
+    environment:
+      MONGODB_URI: mongodb://mongodb:27017/
+      NODE_ENV: development
+      # NODE_ENV: production
+    ports:
+      - 8000:8000
+    command: nodemon -L
+
+  mongodb:
+      image: mongo:latest
+      stdin_open: true
+      tty: true
+      volumes:
+        - /data/db:/data/db
+      ports:
+          - 27017:27017
