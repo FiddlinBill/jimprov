@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og:http://ogp.me/ns#">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{#if title}}{{title}} | {{/if}}Jimprov</title>
+        <meta name="description" content="{{#if description}}{{{description}}}{{/if}}">
+        {{!-- see: http://ogp.me/ --}}
+        <meta property="og:title" content="{{#if og.title}}{{og.title}}{{else}}{{title}}{{/if}}">
+        <meta property="og:site_name" content="jimprov">
+        {{#if og.description}}
+            <meta property="og:description" content="{{{og.description}}}">
+        {{/if}}
+        {{#if og.url}}
+            <meta property="og:url" content="{{url}}">
+        {{/if}}
+        <meta property="og:type" content="website">
+        {{#if og.image}}
+            <meta property="og:image" content="{{_imageserviceUrl}}/{{og.image}},w500,h500">
+            <meta property="og:image:width" content="500">
+            <meta property="og:image:height" content="500">
+        {{/if}}
+        <link href="/css/styles.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <header role="banner">
+            <img src="/images/jim.jpg" class="c-header__image">
+        </header>
+        <div class="l-main-wrapper">
+            <main id="main" class="c-main" role="main">
+                {{{ content }}}
+            </main>
+            <footer class="c-footer l-main-content__wrap--full">
+                <div class="l-main-content__wrap">
+                    &copy; Jimprov Inc.
+                </div>
+            </footer>
+        </div>
+    </body>
+    <script src="/js/vendor.min.js" defer=""></script>
+</html>

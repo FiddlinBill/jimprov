@@ -1,0 +1,146 @@
+/**
+ *
+ * Sass variables
+ *
+ */
+
+$media-smallest: 35em;
+$media-small: 800px;
+$media-medium: 1000px;
+$media-large: 1200px;
+
+/**
+ * New color palette for reach.aero
+ */
+
+$color-white: #fff;
+$color-black: #000;
+
+// Grey/Blueish Colors
+$color-blue-grey-50  : #eceff1;
+$color-blue-grey-100 : #cfd8dc;
+$color-blue-grey-500 : #607d8b;
+$color-blue-grey-800 : #37474f;
+$color-blue-grey     : $color-blue-grey-500;
+$color-disabled-grey : #575757; // This is the lightest grey color allowed before we start sacrificing readability
+
+
+// Orange colors
+$color-deep-orange-50: #fbe9e7;
+$color-deep-orange-100: #ffccbc;
+$color-deep-orange-500: #ff5722;
+$color-deep-orange-800: #bf360c;
+$color-deep-orange: $color-deep-orange-500;
+
+// Yellow colors
+$color-amber-50: #fff8e1;
+$color-amber-500: #ffc107;
+$color-amber-800: #ff8f00;
+$color-amber: $color-amber-500;
+
+// Green colors
+$color-light-green-50: #f1f8e9;
+$color-light-green-500: #8bc34a;
+$color-light-green-800: #33691e;
+$color-light-green: $color-light-green-500;
+
+// Serve as map for Patternlab
+$colors: (
+    'color-white': $color-white,
+    'color-black': $color-black,
+    'color-blue-grey': $color-blue-grey,
+    'color-blue-grey-50': $color-blue-grey-50,
+    'color-blue-grey-100': $color-blue-grey-100,
+    'color-blue-grey-500': $color-blue-grey-500,
+    'color-blue-grey-800': $color-blue-grey-800,
+    'color-disabled-grey': $color-disabled-grey,
+    'color-deep-orange': $color-deep-orange,
+    'color-deep-orange-50': $color-deep-orange-50,
+    'color-deep-orange-100': $color-deep-orange-100,
+    'color-deep-orange-500': $color-deep-orange-500,
+    'color-deep-orange-800': $color-deep-orange-800,
+    'color-amber': $color-amber,
+    'color-amber-50': $color-amber-50,
+    'color-amber-500': $color-amber-500,
+    'color-amber-800': $color-amber-800,
+    'color-light-green': $color-light-green,
+    'color-light-green-50': $color-light-green-50,
+    'color-light-green-500': $color-light-green-500,
+    'color-light-green-800': $color-light-green-800
+);
+
+/**
+ * Color variables
+ */
+
+$color-grey--light:              $color-blue-grey-50;
+$color-grey--lighter:            $color-blue-grey-50;
+$color-grey--middle:             $color-blue-grey-50;
+$color-grey--middle--darker:     $color-blue-grey;
+$color-grey--middle--darkest:    $color-blue-grey;
+$color-grey--darker:             $color-blue-grey-800;
+$color-grey--dark:               $color-blue-grey-800;
+
+$color-yellow:                   $color-amber;
+$color-yellow--darker:           $color-amber-800;
+$color-orange:                   $color-deep-orange;
+
+$color-blue-light:               #d9edf7;
+$color-blue-middle--matte:       $color-blue-grey;
+$color-blue-middle--bright:      $color-blue-grey;
+$color-blue-dark:                $color-blue-grey-800;
+$color-blue-darker:              $color-blue-grey-800;
+$color-blue-darkest:             $color-blue-grey-800;
+
+$color-green-middle:             $color-light-green;
+
+$color-rose--light:              $color-deep-orange-50;
+$color-red--matte:               $color-deep-orange-800;
+$color-red:                      $color-deep-orange-800;
+
+/**
+ * Border styles
+ */
+$surface-border-width-1: 4px;
+$surface-border-width-2: 1px;
+
+$surface-border-1: $surface-border-width-1 solid $color-black;
+$surface-border-2: $surface-border-width-2 solid $color-black;
+$surface-border-2--disabled: $surface-border-width-2 solid $color-disabled-grey;
+$surface-border-2--danger: $surface-border-width-2 solid $color-deep-orange-800;
+$surface-border-2-dashed: $surface-border-width-2 dashed $color-black;
+
+/**
+ * Layout
+ */
+$readable-paragraph-width: 40rem; // translates roughly to 70 characters width
+
+/**
+* base typo
+*/
+$base-font-size: 1rem;
+$base-line-height: $base-font-size * 1.25;
+
+// @TODO: remove after talk about variables or 1rem
+/**
+* horizontal Grid
+*/
+$base-grid-width: 1.25rem;
+
+/**
+* global Grid Variable
+*/
+$base-grid-layout: 1.25rem;
+
+/**
+ * Box shadows
+ */
+
+$box-shadow-zdepth-1: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+$box-shadow-zdepth-2: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+$box-shadow-zdepth-3: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+$box-shadow-zdepth-4: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+$box-shadow-zdepth-5: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+
+// @TODO: Only for debug partial, remove later.
+$color-pink:                     #f0f;

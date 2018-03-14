@@ -1,0 +1,29 @@
+/**
+ * Main Container
+ */
+
+.l-main-wrapper {
+    margin: 0;
+
+    @include media-min($media-small) {
+        margin-left: 10rem;
+    }
+}
+
+.l-main-content__wrap {
+    width: 90%;
+    margin: 0 auto;
+
+    @include media-min($media-small) {
+        width: 100%;
+        max-width: $media-small;
+    }
+}
+
+.l-main-content__wrap--full {
+    width: 100%;
+
+    @include media-min($media-small) {
+        width: 100%;
+    }
+}
