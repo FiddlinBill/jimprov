@@ -11,3 +11,8 @@ clone the repo
 npm install
 docker-compose up
 open localhost:8000 in the browser
+
+# Frontend dev workflow
+
+npm run gulp clean
+npm run gulp build watch
