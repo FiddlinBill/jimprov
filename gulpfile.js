@@ -22,7 +22,7 @@ const internals = {
         'app/client/css/**/*.scss'
     ],
     partials: [
-        'app/server/views/partials/bucket.html'
+        'app/server/views/_partials/bucket.html'
     ],
 };
 
@@ -134,7 +134,7 @@ gulp.task('js:partials', ['js:app'], () => {
                 processPartialName: ((fileName) => JSON.stringify(path.basename(fileName, '.js')))
             }
         }))
-        .pipe($g.concat('partials.js'))
+        .pipe($g.concat('partials.min.js'))
         .pipe($g.uglify())
         .pipe(gulp.dest('public/js'));
 });

@@ -13,19 +13,16 @@
         // Define what happens on successful data submission
         XHR.addEventListener('load', function (event) {
 
-            alert(event.target.responseText);
+            // 
+            form.querySelector('.js-bucket-name').value = '';
         });
 
         // Define what happens in case of error
         XHR.addEventListener('error', function (event) {
 
-            alert('Oups! Something goes wrong.');
+            console.log(event);
         });
-
-        // Set up our request
         XHR.open('POST', action);
-
-        // The data sent is what the user provided in the form
         XHR.send(FD);
     }
 

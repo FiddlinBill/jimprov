@@ -1,10 +1,14 @@
-<form class="c-form c-bucket--new js-bucket" action="/game/{{_id}}" method="POST">
-    <label for="newBucket"><h2 class="c-form__header">Create a new bucket</h2></label>
-    <input id="newBucket" class="c-form__input" type="text" name="name" placeholder="A. G. P. of Nantucket's Bucket">
-    <div class="l-actions">
-        <button type="submit" class="c-action c-action--raised js-add-bucket">Create New Bucket</button>
-    </div>
-</form>
-{{#each buckets}}
-    {{> bucket game=_id}}
-{{/each}}
+<div class="l-main-header">
+    <form class="c-form c-bucket--new js-bucket" action="/game/{{_id}}" method="POST">
+        <label for="newBucket"><h2 class="c-form__header">Create a new bucket</h2></label>
+        <input id="newBucket" class="c-form__input js-bucket-name" type="text" name="name" placeholder="A. G. P. of Nantucket's Bucket">
+        <div class="l-actions">
+            <button type="submit" class="c-action c-action--raised js-add-bucket">Create New Bucket</button>
+        </div>
+    </form>
+</div>
+<div class="c-bucket-list js-bucket-list">
+    {{#each buckets}}
+        {{> bucket}}
+    {{/each}}
+</div>

@@ -9,8 +9,16 @@
         await client.connect();
         const createNewBucket = (update, flags) => {
 
-            console.log(update);
-            //Handlebars.partials.bucket({  })
+            // bucketList <--- hahahahaha
+            const bucketList = document.querySelector('.js-bucket-list');
+            if (bucketList) {
+
+                // Turn html string into html! Ahhhgg!
+                const temp = document.createElement('div');
+                temp.innerHTML = Handlebars.partials.bucket(update);
+                const bucket = temp.firstChild;
+                bucketList.appendChild(bucket);
+            }
         };
 
         const createNewCard = (update, flags) => {
