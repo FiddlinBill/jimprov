@@ -2,6 +2,8 @@
 
 const Hapi = require('hapi');
 const Path = require('path');
+const mongoose = require('mongoose');
+
 const internals = {};
 const server = Hapi.server({
     host: '0.0.0.0',
@@ -14,6 +16,7 @@ internals.viewConfig = {
     relativeTo: __dirname,
     layoutPath: './views/_layout',
     layout: 'default',
+    partialsPath: ['./views/_partials'],
     path: './views'
 };
 
@@ -21,19 +24,31 @@ const loadPlugins = async () => {
 
     return await server.register([
         {
-            plugin: require('vision'),
-            options: {}
+            plugin: require('vision')
         },
         {
-            plugin: require('nes'),
-            options: {}
+            plugin: require('nes')
         },
         {
-            plugin: require('inert'),
-            options: {}
+            plugin: require('inert')
+        },
+        {
+            plugin: require('./models/bucket.js')
+        },
+        {
+            plugin: require('./models/game.js')
+        },
+        {
+            plugin: require('./models/card.js')
+        },
+        {
+            plugin: require('./lib/subscriptions.js')
         }
     ]);
 }
+
+// connect to mongodb
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/jimprov');
 
 
 loadPlugins().then(() => {

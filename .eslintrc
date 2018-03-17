@@ -1,4 +1,7 @@
 {
+  "parserOptions": { 
+    "ecmaVersion": 8
+  },
   "plugins": ["hapi"],
   "extends": "hapi",
   "env": {

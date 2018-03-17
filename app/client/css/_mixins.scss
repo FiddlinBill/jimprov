@@ -31,3 +31,62 @@ $fix-mqs: false !default;
         }
     }
 }
+
+/**
+ * Typographic Ratios are calculated with type-settings
+ * use options -3 to 5 with type-settings @mixin
+ */
+
+// map type-settings
+$type-settings: (
+    -3: (
+        font-size: 0.512rem,
+        line-height: $base-line-height * 0.8
+    ),
+    -2: (
+        font-size: 0.64rem,
+        line-height: $base-line-height * 0.9
+    ),
+    -1: (
+        font-size: 0.8rem,
+        line-height: $base-line-height * 0.9
+    ),
+    0: (
+        font-size: 1rem,
+        line-height: $base-line-height
+    ),
+    1: (
+        font-size: 1.25rem,
+        line-height: $base-line-height * 1.5
+    ),
+    2: (
+        font-size: 1.563rem,
+        line-height: $base-line-height * 1.8
+    ),
+    3: (
+        font-size: 1.953rem,
+        line-height: $base-line-height * 2
+    ),
+    4: (
+        font-size: 2.441rem,
+        line-height: $base-line-height * 2.2
+    )
+);
+
+// helper function font-size
+@function type-scale($level) {
+    @return map-get(
+        map-get($type-settings, $level), 'font-size');
+}
+
+// helper function line-height
+@function line-height($level) {
+    @return map-get(
+        map-get($type-settings, $level), 'line-height');
+}
+
+// type settings mixin for styles
+@mixin type-settings($level: 0) {
+    font-size: type-scale($level);
+    line-height: line-height($level);
+}

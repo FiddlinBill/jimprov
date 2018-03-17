@@ -12,13 +12,18 @@ const Handlebars = require('handlebars');
 // JavaScript and CSS which get processed (e.g. concatenated, minified)
 const internals = {
     js: [
+        'node_modules/handlebars/dist/handlebars.runtime.js',
+        'node_modules/nes/dist/client.js',
         'app/client/js/*.js',
         'app/client/js/**/*.js'
     ],
     css: [
         'app/client/css/*.scss',
         'app/client/css/**/*.scss'
-    ]
+    ],
+    partials: [
+        'app/server/views/partials/bucket.html'
+    ],
 };
 
 
@@ -71,10 +76,10 @@ gulp.task('lint:scss', () => {
 });
 
 
-gulp.task('build', ['assets', 'js', 'css']);
+//gulp.task('build', ['assets', 'js', 'css']);
 
 
-gulp.task('build', ['assets', 'js:app', 'css:app']);
+gulp.task('build', ['assets', 'js:app', 'css:app', 'js:partials']);
 
 
 gulp.task('watch', ['build'], () => {
@@ -115,3 +120,21 @@ gulp.task('js:app', () => gulp.src(internals.js)
     .pipe($g.uglify())
     .pipe($g.sourcemaps.write('./sourcemaps'))
     .pipe(gulp.dest('public/js')));
+
+// share some partial templates with the frontend
+
+gulp.task('js:partials', ['js:app'], () => {
+
+    return gulp.src(internals.partials)
+        .pipe($g.handlebars({
+            handlebars: Handlebars
+        }))
+        .pipe($g.wrap('Handlebars.registerPartial(<%= processPartialName(file.relative) %>, Handlebars.template(<%= contents %>));', {}, {
+            imports: {
+                processPartialName: ((fileName) => JSON.stringify(path.basename(fileName, '.js')))
+            }
+        }))
+        .pipe($g.concat('partials.js'))
+        .pipe($g.uglify())
+        .pipe(gulp.dest('public/js'));
+});

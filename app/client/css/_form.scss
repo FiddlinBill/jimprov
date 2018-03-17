@@ -1,0 +1,11 @@
+.c-form {
+    margin-top: $base-line-height;
+    padding: $base-line-height;
+	border: $surface-border-2;
+	width: 20%;
+    max-width: $readable-paragraph-width; // keep form readable area from growing too wide
+}
+
+.c-form__header {
+	text-align: center;
+}
