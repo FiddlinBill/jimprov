@@ -33,6 +33,11 @@ internals.routes = [
         method: 'POST',
         path: '/game/{gameId}',
         config: Jimprov.createBucket
+    },
+    {
+        method: 'POST',
+        path: '/game/{gameId}/bucket/{bucketId}',
+        config: Jimprov.createCard
     }
 ];
 

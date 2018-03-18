@@ -10,11 +10,19 @@
         // Bind the FormData object and the form element
         const FD = new FormData(form);
 
-        // Define what happens on successful data submission
+        // After successful submit, clear the inputs
         XHR.addEventListener('load', function (event) {
 
-            // 
-            form.querySelector('.js-bucket-name').value = '';
+            const bucketName = form.querySelector('.js-bucket-name');
+            const card = form.querySelector('.js-card');
+
+            if (bucketName) {
+                bucketName.value = '';
+            }
+
+            if (card) {
+                card.value = '';
+            }
         });
 
         // Define what happens in case of error
@@ -22,6 +30,7 @@
 
             console.log(event);
         });
+
         XHR.open('POST', action);
         XHR.send(FD);
     }
@@ -31,7 +40,7 @@
         const action = e.target.getAttribute('action');
 
         if (action) {
-            event.preventDefault();
+            e.preventDefault();
             sendForm(e.target, action);
         }
     });

@@ -26,6 +26,15 @@ exports.register = async function (server, options) {
         foreignField: 'bucket'
     });
 
+    BucketSchema.virtual('numberOfCards').get(function(){
+
+        if (this.cards && this.cards.length) {
+            return this.cards.length;
+        }
+
+        return 0;
+    });
+
     Mongoose.model('Bucket', BucketSchema);
 }
 

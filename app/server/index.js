@@ -23,27 +23,13 @@ internals.viewConfig = {
 const loadPlugins = async () => {
 
     return await server.register([
-        {
-            plugin: require('vision')
-        },
-        {
-            plugin: require('nes')
-        },
-        {
-            plugin: require('inert')
-        },
-        {
-            plugin: require('./models/bucket.js')
-        },
-        {
-            plugin: require('./models/game.js')
-        },
-        {
-            plugin: require('./models/card.js')
-        },
-        {
-            plugin: require('./lib/subscriptions.js')
-        }
+        require('vision'),
+        require('nes'),
+        require('inert'),
+        require('./models/bucket.js'),
+        require('./models/game.js'),
+        require('./models/card.js'),
+        require('./lib/subscriptions.js')
     ]);
 }
 
