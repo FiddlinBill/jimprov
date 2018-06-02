@@ -4,7 +4,10 @@ const Mongoose = require('mongoose');
 
 exports.register = async function (server, options) {
 
-    const GameSchema = new Mongoose.Schema({ },
+    const GameSchema = new Mongoose.Schema(
+        {
+            cardsPerRound: Number
+        },
         {
             toObject: {
                 virtuals: true

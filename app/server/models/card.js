@@ -6,10 +6,18 @@ exports.register = async function (server, options) {
 
     const CardSchema = new Mongoose.Schema({
             content: String,
+            played: Boolean,
             bucket: {
                 type: Mongoose.Schema.Types.ObjectId,
-                ref: 'Bucket'
+                ref: 'Bucket',
+                required: true
+            },
+            game: {
+                type: Mongoose.Schema.Types.ObjectId,
+                ref: 'Game',
+                required: true
             }
+
         },
         {
             toObject: {

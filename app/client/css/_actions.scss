@@ -50,10 +50,25 @@
         }
     }
 
+    &.is-counting-down {
+        &:hover {
+            .c-action__text {
+                display: none;
+            }
+            .c-action__alt {
+                display: inline;
+            }
+        }
+    }
+
     @include media-min($media-small) {
         margin-right: 0.5em;
         padding: $base-grid-width;
     }
+}
+
+.c-action__alt {
+    display: none;
 }
 
 .c-action--symbol {

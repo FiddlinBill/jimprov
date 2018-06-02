@@ -7,7 +7,7 @@
 
         const XHR = new XMLHttpRequest();
 
-        // Bind the FormData object and the form element
+        // get the form data from the form element
         const FD = new FormData(form);
 
         // After successful submit, clear the inputs
@@ -25,23 +25,42 @@
             }
         });
 
-        // Define what happens in case of error
+        // error handling
         XHR.addEventListener('error', function (event) {
 
             console.log(event);
         });
 
         XHR.open('POST', action);
+        // let server know that this is an ajax request
+        XHR.setRequestHeader('Accept', 'application/json');
         XHR.send(FD);
     }
 
-    document.addEventListener('submit', function (e) {
+    const bucketContainer = document.querySelector('.js-bucket-list');
+    const newBucketForm = document.querySelector('js-new-bucket');
 
-        const action = e.target.getAttribute('action');
+    if (bucketContainer) {
+        bucketContainer.addEventListener('submit', function (e) {
 
-        if (action) {
-            e.preventDefault();
-            sendForm(e.target, action);
-        }
-    });
+            const action = e.target.getAttribute('action');
+
+            if (action) {
+                e.preventDefault();
+                sendForm(e.target, action);
+            }
+        });
+    }
+
+    if (newBucketForm) {
+        newBucketForm.addEventListener('submit', function (e) {
+
+            const action = this.getAttribute('action');
+
+            if (action) {
+                e.preventDefault();
+                sendForm(e.target, action);
+            }
+        });
+    }
 })();

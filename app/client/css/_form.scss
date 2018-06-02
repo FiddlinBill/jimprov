@@ -4,6 +4,7 @@
     padding: $base-line-height;
 	border: $surface-border-2;
 	width: 20%;
+	min-width: 15rem;
     max-width: $readable-paragraph-width; // keep form readable area from growing too wide
 }
 

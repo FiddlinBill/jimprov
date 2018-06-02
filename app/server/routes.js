@@ -35,6 +35,22 @@ internals.routes = [
         config: Jimprov.createBucket
     },
     {
+        method: 'GET',
+        path: '/game/{gameId}/round',
+        config: Jimprov.newRound
+    },
+
+    {
+        method: 'POST',
+        path: '/game/{gameId}/countdown',
+        config: Jimprov.countDown
+    },
+    {
+        method: 'POST',
+        path: '/game/{gameId}/settings/cards',
+        config: Jimprov.setCardsPerRound
+    },
+    {
         method: 'POST',
         path: '/game/{gameId}/bucket/{bucketId}',
         config: Jimprov.createCard

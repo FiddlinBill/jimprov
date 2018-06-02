@@ -27,7 +27,6 @@
 
         const createNewCard = (update, flags) => {
 
-            console.log(update);
             const cardNumberElement = document.querySelector(`.js-cards-${update.bucket}`);
             const cardNumber = cardNumberElement && parseInt(cardNumberElement.innerHTML, 10) + 1;
 
@@ -36,16 +35,45 @@
             }
         };
 
+        const startRound = (update, flags) => {
+
+            console.log('WIOOOOPWPWPWWPPWP');
+            const backdrop = document.getElementsByClassName('c-modal-backdrop')[0];
+            const showCardsModal = document.getElementsByClassName('js-show-cards-modal')[0];
+
+            showCardsModal.classList.add('is-visible');
+            backdrop.classList.add('is-visible');
+
+            showCardsModal.querySelector('.js-show-card-modal-content').innerHTML = JSON.stringify(update);
+        };
+
         const buckets = document.getElementsByClassName('js-bucket');
+        const startGameButton = document.querySelector('.js-start-round');
         // get the game id from the url
         const url = window.location.href;
         const gameSubstring = url.match(/game\/[a-f\d]{24}$/i);
         const gameId = gameSubstring && gameSubstring[0].match(/[a-f\d]{24}$/i)[0];
 
-        // subscribe to game channel (bucket creation)
         if (gameId) {
-            console.log(`/game/${gameId}`);
+            // subscribe to game channel (bucket creation)
             client.subscribe(`/game/${gameId}`, createNewBucket);
+            // subscribe to game countdown channel
+            client.subscribe(`/game/${gameId}/start`, (update) => {
+
+                if (startGameButton) {
+                    startGameButton.querySelector('.c-action__text').innerHTML = update.timeRemaining;
+                }
+
+                if (update.timeRemaining === 'Start Round') {
+                    // reset timer
+                    document.querySelector('.js-start-round').classList.remove('is-counting-down');
+                    document.querySelector('.js-time-remaining').value = '5';
+                    return;
+                }
+
+                document.querySelector('.js-start-round').classList.add('is-counting-down');
+            });
+            client.subscribe(`/game/${gameId}/round`, startRound);
         }
 
         // subscribe to all previously existing bucket channels
@@ -54,7 +82,6 @@
 
                 const action = bucket.getAttribute('action');
 
-                console.log(action);
                 if (action) {
                     client.subscribe(action, createNewCard);
                 }
