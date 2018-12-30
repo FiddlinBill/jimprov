@@ -1,17 +1,23 @@
-<div class="l-main-header">
-    <form class="c-form js-new-bucket" action="/game/{{_id}}" method="POST">
-        <label for="newBucket"><h2 class="c-form__header">Create a new bucket</h2></label>
-        <input id="newBucket" class="c-form__input js-bucket-name" type="text" name="name" placeholder="A. G. P. of Nantucket's Bucket">
-        <div class="l-actions">
-            <button type="submit" class="c-action c-action--raised js-add-bucket">Create New Bucket</button>
-        </div>
-    </form>
-    <div>
-        <form class="c-form js-game-countdown" action="/game/{{_id}}/countdown" method="POST">
-            <input class="js-time-remaining" type="text" name="timeRemaining" value="5" hidden>
-            <button type="submit" class="c-action c-action--raised js-start-round"><span class="c-action__text js-action-text">Start Round</span><span class="c-action__alt">Cancel</span></button>
-        </form>
+<form class="c-form js-new-bucket" action="/game/{{_id}}" method="POST">
+    <label for="newBucket"><h2 class="c-form__header">Create a new bucket</h2></label>
+    <input id="newBucket" class="c-form__input js-bucket-name" type="text" name="name" placeholder="A. G. P. of Nantucket's Bucket">
+    <div class="l-actions">
+        <button type="submit" class="c-action c-action--raised js-add-bucket">Create New Bucket</button>
     </div>
+</form>
+
+<div>
+    <form class="c-form js-settings" action="/game/{{_id}}/settings" method="POST">
+        <label class="c-form__label" for="cardsPerRound">Cards Per Round</label>
+        <input id="cardsPerRound" class="c-form__input js-cards-per-round" type="number" name="cardsPerRound" value={{cardsPerRound}}>
+    </form>
+</div>
+
+<div>
+    <form class="c-form js-game-countdown" action="/game/{{_id}}/countdown" method="POST">
+        <input class="js-time-remaining" type="text" name="timeRemaining" value="5" hidden>
+        <button type="submit" class="c-action c-action--raised js-start-round"><span class="c-action__text js-action-text">Start Round</span><span class="c-action__alt">Cancel</span></button>
+    </form>
 </div>
 <div class="c-bucket-list js-bucket-list">
     {{#each buckets}}

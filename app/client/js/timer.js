@@ -46,7 +46,14 @@
                 clearInterval(countdown);
             }
 
-            form.querySelector('.js-start-round').classList.remove('is-counting-down');
+            const startButtons = document.querySelectorAll('.js-start-round');
+
+            console.log(startButtons);
+            [].forEach.call(startButtons, function (el) {
+
+                el.classList.remove('is-counting-down');
+            });
+
             sendForm(form, action);
             return;
         }
@@ -61,11 +68,17 @@
             }
 
             if (timer < 0 || stopTimer) {
+
+                const startButtons = document.querySelectorAll('.js-start-round');
                 timeRemainingInput.value = 'Start Round';
                 timer = duration;
                 clearInterval(countdown);
                 fetch(`/game/${gameId}/round`);
-                form.querySelector('.js-start-round').classList.remove('is-counting-down');
+
+                [].forEach.call(startButtons, function (el) {
+
+                    el.classList.remove('is-counting-down');
+                });
             }
 
             sendForm(form, action);
@@ -73,7 +86,7 @@
         }, 1000);
     };
 
-    const client = new window.nes.Client('ws://localhost:8000');
+    const client = new window.nes.Client('ws://0.0.0.0:8000');
 
     const start = async () => {
 
@@ -94,24 +107,36 @@
     start();
 
     const countDownForm = document.querySelector('.js-game-countdown');
+    const mainContainer = document.querySelector('.js-main');
 
-    if (countDownForm) {
-
-        countDownForm.querySelector('.js-start-round').addEventListener('click', function (e) {
-
-            e.preventDefault();
-            const action = countDownForm.getAttribute('action');
-
-            if (this.classList.contains('is-counting-down')) {
-                countDownForm.querySelector('.js-time-remaining').value = 'stop';
-            }
-
-            if (!this.classList.contains('is-counting-down')) {
-                this.classList.add('is-counting-down');
-                stopTimer = false;
-            }
-
-            timer(5, countDownForm, action);
-        });
+    if (!countDownForm || !mainContainer) {
+        return;
     }
+
+    mainContainer.addEventListener('click', function (e) {
+
+        const parent = e.target.closest('.js-start-round');
+        if (!e.target.classList.contains('js-start-round') && !parent) {
+            return;
+        }
+
+        e.preventDefault();
+        const action = countDownForm.getAttribute('action');
+
+        console.log('yass!!!');
+
+        if (document.querySelectorAll('.is-counting-down').length) {
+            document.querySelector('.js-time-remaining').value = 'stop';
+            timer(5, countDownForm, action);
+            return;
+        }
+
+        [].forEach.call(document.querySelectorAll('.js-start-round'), function (button) {
+
+            button.classList.add('is-counting-down');
+        });
+
+        stopTimer = false;
+        timer(5, countDownForm, action);
+    });
 })();

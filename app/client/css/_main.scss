@@ -1,6 +1,9 @@
 /**
  * Main Container
  */
+.c-main {
+	text-align: center;
+}
 
 .l-main-wrapper {
     margin: 0;
@@ -18,10 +21,6 @@
 
 .l-main-content__wrap--full {
     width: 100%;
-}
-
-.l-main-header {
-	text-align: center;
 }
 
 .c-main__image {

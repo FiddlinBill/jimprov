@@ -38,7 +38,8 @@
     }
 
     const bucketContainer = document.querySelector('.js-bucket-list');
-    const newBucketForm = document.querySelector('js-new-bucket');
+    const newBucketForm = document.querySelector('.js-new-bucket');
+    const settingsForm = document.querySelector('.js-settings');
 
     if (bucketContainer) {
         bucketContainer.addEventListener('submit', function (e) {
@@ -61,6 +62,24 @@
                 e.preventDefault();
                 sendForm(e.target, action);
             }
+        });
+    }
+
+    if (settingsForm) {
+        settingsForm.querySelector('.js-cards-per-round').addEventListener('change', function (e) {
+
+            console.log('lets submit this');
+            const action = settingsForm.getAttribute('action');
+
+            if (action) {
+                e.preventDefault();
+                sendForm(settingsForm, action);
+            }
+        });
+
+        // prevent form from submitting by conventional means
+        settingsForm.addEventListener('submit', function (e) {
+            e.preventDefault();    
         });
     }
 })();

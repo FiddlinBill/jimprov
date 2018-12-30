@@ -2,7 +2,7 @@
 
 (function () {
 
-    const client = new window.nes.Client('ws://localhost:8000');
+    const client = new window.nes.Client('ws://0.0.0.0:8000');
 
     const start = async () => {
 
@@ -35,20 +35,31 @@
             }
         };
 
-        const startRound = (update, flags) => {
+        const updateSettings = (update, flags) => {
 
-            console.log('WIOOOOPWPWPWWPPWP');
+            const cardsPerRound = document.querySelector('.js-cards-per-round');
+
+            console.log('blabble!!!');
+            if (!cardsPerRound) {
+                return;
+            }
+
+            cardsPerRound.value = update.cardsPerRound;
+        };
+
+        const showCards = (update, flags) => {
+
             const backdrop = document.getElementsByClassName('c-modal-backdrop')[0];
             const showCardsModal = document.getElementsByClassName('js-show-cards-modal')[0];
 
             showCardsModal.classList.add('is-visible');
             backdrop.classList.add('is-visible');
 
-            showCardsModal.querySelector('.js-show-card-modal-content').innerHTML = JSON.stringify(update);
+            showCardsModal.querySelector('.js-show-card-modal-content').innerHTML = Handlebars.partials.card(update);
         };
 
         const buckets = document.getElementsByClassName('js-bucket');
-        const startGameButton = document.querySelector('.js-start-round');
+        const startGameButtons = document.querySelectorAll('.js-start-round');
         // get the game id from the url
         const url = window.location.href;
         const gameSubstring = url.match(/game\/[a-f\d]{24}$/i);
@@ -60,20 +71,33 @@
             // subscribe to game countdown channel
             client.subscribe(`/game/${gameId}/start`, (update) => {
 
-                if (startGameButton) {
-                    startGameButton.querySelector('.c-action__text').innerHTML = update.timeRemaining;
+                if (startGameButtons.length) {
+                    [].forEach.call(startGameButtons, function (button) {
+
+                        button.querySelector('.c-action__text').innerHTML = update.timeRemaining;
+                    });
+
+                    return;
                 }
 
                 if (update.timeRemaining === 'Start Round') {
                     // reset timer
-                    document.querySelector('.js-start-round').classList.remove('is-counting-down');
+                    [].forEach.call(startGameButtons, function (button) {
+
+                        button.classList.remove('is-counting-down');
+                    });
+
                     document.querySelector('.js-time-remaining').value = '5';
                     return;
                 }
 
-                document.querySelector('.js-start-round').classList.add('is-counting-down');
+                [].forEach.call(startGameButtons, function (button) {
+
+                    button.classList.add('is-counting-down');
+                });
             });
-            client.subscribe(`/game/${gameId}/round`, startRound);
+            client.subscribe(`/game/${gameId}/round`, showCards);
+            client.subscribe(`/game/${gameId}/settings`, updateSettings);
         }
 
         // subscribe to all previously existing bucket channels

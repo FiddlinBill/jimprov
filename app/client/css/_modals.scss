@@ -48,3 +48,31 @@ $width-right: 60%;
         z-index: 200;
     }
 }
+
+// Modal contents are divided into sections
+.c-modal__section {
+    width: 100%;
+    min-height: $base-grid-width * 2;
+    border-bottom: $surface-border-2;
+    padding: $base-line-height;
+
+    @include media-min($media-small){
+        padding-left: 0;
+    }
+}
+
+.c-modal__section + c-modal__section {
+    border: 0;
+}
+
+.c-object__header + .c-object__footer {
+    border: 0;
+}
+
+.c-modal__section + .c-modal__footer {
+    border: 0;
+}
+
+.c-modal__section:last-child {
+    border: 0;
+}

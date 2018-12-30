@@ -1,6 +1,7 @@
 'use strict';
 
 const Mongoose = require('mongoose');
+const cardsPerRoundDefault = 1;
 
 exports.index = {
     handler: function (request, reply) {
@@ -43,6 +44,8 @@ exports.viewGame = {
         const game = await Mongoose.model('Game')
             .findOne({ _id: request.params.gameId })
             .populate({ path : 'buckets', populate : { path : 'cards' } });
+
+        game.cardsPerRound = game.cardsPerRound || cardsPerRoundDefault;
 
         return reply.view('game', game);
     }
@@ -108,61 +111,68 @@ exports.createCard = {
 exports.newRound = {
     handler: async function (request, reply) {
 
-        console.log('IT GETS INT EH HANDALELRLERLERLELRELRLE');
-        const getCards = async (bucketId, cardsPerRound) => {
-
-            const cards = [];
-
-            for (let i = 0; i < cardsPerRound; i++) {
-
-                let card = await Mongoose.model('Card')
-                    .aggregate()
-                    .match({ bucket: bucketId, played: { $ne: true } })
-                    .sample(cardsPerRound || 1);
-
-                if (!Array.isArray(card) || card.length !== 1) {
-                    return;
-                }
-
-                card = card[0];
-                await Mongoose.model('Card')
-                    .update({ _id: card._id }, { played: true })
-
-                cards.push(card);
-            }
-
-            return cards;
-        };
-
         const gameId = request.params.gameId;
         const game = await Mongoose.model('Game')
             .findOne({ _id: gameId });
-        const cardsPerRound = game.cardsPerRound || 1;
+        const cardsPerRound = game.cardsPerRound || cardsPerRoundDefault;
 
         request.server.eachSocket(async (socket) => {
 
-            console.log('sendig cardds to client!!!!!');
             const buckets = await Mongoose.model('Bucket')
                 .find({ game: gameId })
-                .populate('cards');
+                .populate({ path: 'cards' });
 
-            let cards = [];
+            const payload = { buckets: [] };
+            const promises = [];
 
             if (!buckets) {
                 return;
             }
 
-            buckets.forEach( async (bucket) => {
 
-                const stuff = getCards(bucket._id, cardsPerRound);
+            buckets.forEach(async (bucket) => {
+                
+                let cards = bucket.cards.filter((c) => !c.played);
+                let playedCards = bucket.cards.filter((c) => c.played);
 
-                cards.push(stuff);
+                if (!bucket.cards.length) {
+                    return;
+                }
+
+                bucket.cards = [];
+
+                for (let i = 0; i < cardsPerRound; i++) {
+
+                    // reshuffle used cards if there are no unused cards to pick
+                    if (!cards.length) {
+                        cards = playedCards;
+                        const card = cards[Math.floor(Math.random()*cards.length)];
+                        const update = Mongoose.model('Card')
+                            .update({ $and: [{ bucket: bucket._id }, { _id: { $ne: card._id } }] }, { $unset: { played: true } }, { multi: true });
+
+                        promises.push(update);
+                        bucket.cards.push(card);
+                        cards = cards.filter(item => !item._id.equals(card._id));
+                        continue;
+                    }
+
+                    const card = cards[Math.floor(Math.random()*cards.length)];
+
+                    // mark cards as played
+                    const update = Mongoose.model('Card')
+                        .update({ _id: card._id }, { played: true });
+
+                    promises.push(update);
+                    bucket.cards.push(card);
+                    cards = cards.filter(item => !item._id.equals(card._id));
+                }
+    
+                payload.buckets.push(bucket);
             });
 
+            await Promise.all(promises);
 
-            cards = await Promise.all(cards);
-            cards = [].concat.apply([], cards);
-            socket.publish(`/game/${gameId}/round`, { cards });
+            socket.publish(`/game/${gameId}/round`, payload);
 
         }, { subscription: `/game/${gameId}` });
 
@@ -176,9 +186,9 @@ exports.newRound = {
 };
 
 exports.setCardsPerRound = {
-    handler: function (request, reply) {
+    handler: async function (request, reply) {
 
-        const cardsPerRound = request.payload.cards;
+        const cardsPerRound = request.payload.cardsPerRound;
         const gameId = request.params.gameId;
 
         // if it's not a number, screw them!
@@ -186,10 +196,10 @@ exports.setCardsPerRound = {
             return;
         }
 
-        Mongoose.model('Game')
+        await Mongoose.model('Game')
             .findOneAndUpdate({ _id: gameId }, { $set: { cardsPerRound } })
 
-        request.server.publish(`/game/${game}/settings/cards`, { cardsPerRound });
+        request.server.publish(`/game/${gameId}/settings`, { cardsPerRound });
 
         // if the request was made with ajax, don't redirect
         if (request.isXHR) {

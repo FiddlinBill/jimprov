@@ -1,3 +1,7 @@
-<div class="c-card">
-	
-</div>
+{{#each buckets}}
+	{{#each cards}}
+		<div class="c-card">
+			<i>{{../name}}:</i> {{content}}
+		</div>
+	{{/each}}
+{{/each}}

@@ -22,7 +22,8 @@ const internals = {
         'app/client/css/**/*.scss'
     ],
     partials: [
-        'app/server/views/_partials/bucket.html'
+        'app/server/views/_partials/bucket.html',
+        'app/server/views/_partials/card.html'
     ],
 };
 

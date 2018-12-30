@@ -47,7 +47,7 @@ internals.routes = [
     },
     {
         method: 'POST',
-        path: '/game/{gameId}/settings/cards',
+        path: '/game/{gameId}/settings',
         config: Jimprov.setCardsPerRound
     },
     {
