@@ -2,7 +2,12 @@
 
 (function () {
 
-    const client = new window.nes.Client('ws://0.0.0.0:8000');
+    const isLocal = ~location.href.indexOf('://localhost');
+    let client = new window.nes.Client('wss://' + window.location.host);
+
+    if (isLocal) {
+        client = new window.nes.Client('ws://' + window.location.host);
+    }
 
     const start = async () => {
 
