@@ -1,0 +1,28 @@
+/**
+ * Helper Classes, Functions
+ */
+
+// images
+.h-responsive-image {
+    max-width: 100%;
+    display: block;
+    margin: 0;
+}
+
+// Set global border-box
+html {
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+// Prevent vertical scrolling of element
+.h-no-scrolling {
+    overflow-y: hidden;
+    overflow-x: hidden;
+    position: fixed;
+}

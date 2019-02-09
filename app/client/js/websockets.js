@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
     const client = new window.nes.Client((location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host);
 
     const start = async () => {
@@ -38,7 +39,6 @@
 
             const cardsPerRound = document.querySelector('.js-cards-per-round');
 
-            console.log('blabble!!!');
             if (!cardsPerRound) {
                 return;
             }
@@ -51,6 +51,7 @@
             const backdrop = document.getElementsByClassName('c-modal-backdrop')[0];
             const showCardsModal = document.getElementsByClassName('js-show-cards-modal')[0];
 
+            document.body.classList.add('h-no-scrolling');
             showCardsModal.classList.add('is-visible');
             backdrop.classList.add('is-visible');
 

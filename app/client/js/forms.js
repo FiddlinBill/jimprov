@@ -68,7 +68,6 @@
     if (settingsForm) {
         settingsForm.querySelector('.js-cards-per-round').addEventListener('change', function (e) {
 
-            console.log('lets submit this');
             const action = settingsForm.getAttribute('action');
 
             if (action) {

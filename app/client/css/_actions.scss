@@ -51,12 +51,24 @@
     }
 
     &.is-counting-down {
-        &:hover {
+
+        &:active {
             .c-action__text {
-                display: none;
+                display: inline;
             }
             .c-action__alt {
-                display: inline;
+                display: none;
+            }
+        }
+
+        @include media-min($media-small) {
+            &:hover {
+                .c-action__text {
+                    display: none;
+                }
+                .c-action__alt {
+                    display: inline;
+                }
             }
         }
     }

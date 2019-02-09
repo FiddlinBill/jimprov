@@ -48,6 +48,6 @@ loadPlugins().then(() => {
 
 process.on('unhandledRejection', (err) => {
 
-    console.log(err);
+    server.log(err);
     process.exit(1);
 });

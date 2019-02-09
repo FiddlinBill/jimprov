@@ -39,7 +39,6 @@
 
         // Stop timer. Still submit the form to reset other clients' timers
         if (timeRemainingInput.value === 'stop') {
-            console.log('wtf!!');
             timeRemainingInput.value = 'Start Round';
 
             if (countdown) {
@@ -48,7 +47,6 @@
 
             const startButtons = document.querySelectorAll('.js-start-round');
 
-            console.log(startButtons);
             [].forEach.call(startButtons, function (el) {
 
                 el.classList.remove('is-counting-down');
@@ -60,7 +58,6 @@
 
         countdown = setInterval(function () {
 
-            console.log('yaya!!');
             timeRemainingInput.value = timer;
 
             if (timer === 0) {
@@ -122,8 +119,6 @@
 
         e.preventDefault();
         const action = countDownForm.getAttribute('action');
-
-        console.log('yass!!!');
 
         if (document.querySelectorAll('.is-counting-down').length) {
             document.querySelector('.js-time-remaining').value = 'stop';
