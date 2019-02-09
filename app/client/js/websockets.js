@@ -1,13 +1,7 @@
 'use strict';
 
 (function () {
-
-    const isLocal = ~location.href.indexOf('://localhost');
-    let client = new window.nes.Client('wss://' + window.location.host);
-
-    if (isLocal) {
-        client = new window.nes.Client('ws://' + window.location.host);
-    }
+    const client = new window.nes.Client((location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host);
 
     const start = async () => {
 

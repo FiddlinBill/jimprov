@@ -79,7 +79,8 @@
 
         // prevent form from submitting by conventional means
         settingsForm.addEventListener('submit', function (e) {
-            e.preventDefault();    
+
+            e.preventDefault();
         });
     }
 })();
