@@ -39,7 +39,11 @@ internals.routes = [
         path: '/game/{gameId}/round',
         config: Jimprov.newRound
     },
-
+    {
+        method: 'GET',
+        path: '/game/{gameId}/next-card',
+        config: Jimprov.nextCard
+    },
     {
         method: 'POST',
         path: '/game/{gameId}/countdown',

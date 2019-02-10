@@ -2,6 +2,9 @@
     <section class="c-modal__section js-show-card-modal-content">
     </section>
     <footer class="c-modal__footer l-text-actions">
-        <button type="button" class="c-action c-action--raised js-start-round h-modal__footer-buttons"><span class="c-action__text js-action-text">Next Round</span><span class="c-action__alt">Cancel</span></button>
+        <button
+        	type="button"
+        	class="c-action c-action--raised h-modal__footer-buttons{{#if presentor}} js-next-card{{else}} js-start-round{{/if}}"><span class="c-action__text js-action-text">{{#if presentor}}Next Card{{else}}Next Round{{/if}}</span><span class="c-action__alt">Cancel</span>
+        </button>
     </footer>
 </article>

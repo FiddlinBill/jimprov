@@ -6,7 +6,8 @@ exports.register = async function (server, options) {
 
     const GameSchema = new Mongoose.Schema(
         {
-            cardsPerRound: Number
+            cardsPerRound: Number,
+            presentor: Boolean
         },
         {
             toObject: {
